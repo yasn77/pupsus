@@ -1,0 +1,7 @@
+CONFIGFILES="\
+%config(noreplace) /etc/pupsus/pupsus.ini"
+
+echo "$CONFIGFILES" | cat INSTALLED_FILES - 
+> INSTALLED_FILES.new
+
+mv INSTALLED_FILES.new INSTALLED_FILES

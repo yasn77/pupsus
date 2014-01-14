@@ -20,7 +20,7 @@ install_requires = [
                    ]
 setup(
     name = "pupsus",
-    version = "0.0.4",
+    version = "0.0.5",
     author = "Yasser Nabi",
     author_email = "yassersaleemi@gmail.com",
     description = ("Manage Puppet modules with Sonatype Nexus"),
