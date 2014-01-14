@@ -43,7 +43,7 @@ class Puppet(object):
                 if sys.version_info[0] < 3:
                     # ConfigParser in versions < 3 don't like leading white space, most default
                     # Puppet config use leading white space :/
-                    no_leading_whitespace = re.sub('\ +', '', open(self.puppetconf['config'], 'r').read())
+                    no_leading_whitespace = re.sub('\ +|\t+', '', open(self.puppetconf['config'], 'r').read())
                     pcf = StringIO.StringIO(no_leading_whitespace)
                     c.readfp(pcf)
                 else:
@@ -52,7 +52,7 @@ class Puppet(object):
             raise
         self.puppetconf['environments'] = {}
         for section in c.sections():
-            if section not in ['main', 'agent', 'master', 'user']:
+            if section not in ['main', 'agent', 'master', 'user', 'puppetmasterd']:
                 self.puppetconf['environments'][section] = c.get(section, 'modulepath')
         self.puppetconf['environments']['production'] = self.defaultModulePath
     
