@@ -50,7 +50,8 @@ class Pupsus():
                             environment is specified, then the modulepath from Puppet \
                             environment will used', default=None, action=self.__addToConfig__(pupsusConfig, section='puppet'))
         parser.add_argument('-f', '--puppet-config', dest='puppet_config',
-                            help='Puppet configuration file', action=self.__addToConfig__(pupsusConfig, section='puppet'))
+                            help='Puppet configuration file. Note: If multiple \
+                            module paths are listed, then only the first path is used', action=self.__addToConfig__(pupsusConfig, section='puppet'))
         parser.add_argument('-p', '--puppet-command', dest='puppet_command',
                             help='Path to Puppet command', action=self.__addToConfig__(pupsusConfig, section='puppet'))
         args = parser.parse_args()
@@ -91,7 +92,7 @@ class Pupsus():
         return addToConfig
     
     def install(self, modulename, environment, version='LATEST'):
-        modulepath = self.puppet.puppetconf['environments'][environment]
+        modulepath = self.puppet.getmodulepath(environment)
         ret = self.puppet.installmodule(modulename, modulepath=modulepath, version=version)
         print('%s installed' % ret[0] if ret != 'item not found' else '%s : %s v%s' % (ret, modulename, version))
     

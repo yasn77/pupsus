@@ -99,7 +99,7 @@ class Puppet(object):
     
     def isinstalled(self, module, environment=None):
         moduleInstalled = [False, None]
-        modulepath = self.puppetconf['environments'][environment]
+        modulepath = self.getmodulepath(environment)
         CMD = [self.puppetconf['command'], 'module', 'list', '--render', 'yaml', '--modulepath', modulepath]
         try:
             p = subprocess.Popen(CMD, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -154,7 +154,7 @@ class Puppet(object):
         return result     
     
     def getmodulepath(self, environment):
-        return self.puppetconf['environments'][environment]
+        return self.puppetconf['environments'][environment].split(':')[0]
 
     def getdeplist(self, m, **kwargs):
         dep = {}
